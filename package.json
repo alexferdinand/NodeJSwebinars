@@ -1,0 +1,20 @@
+{
+  "name": "lesson1",
+  "version": "1.0.0",
+  "description": "homework-1",
+  "main": "helloWorldNode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Al Fomin",
+  "license": "ISC"
+  "dependencies": {
+    "tinycolor2": {
+      "version": "1.4.1",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/bgrins/TinyColor.git"
+      }
+    }
+}
