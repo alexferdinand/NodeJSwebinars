@@ -36,8 +36,13 @@ function logRead() {
 }
 
 function analyzer() {
+    if (ARGS.hasOwnProperty('logname') && fs.existsSync(ARGS.logname) || fs.existsSync('defaultLog.txt')) {
     const log = JSON.parse(logRead())
     console.log("Количество сыгранных игр:", gameNumber(log), "Количество выигранных игр:", winNumber(log), "Количество проигранных игр:", lossNumber(log), `Самая длинная выигрышная серия ${maxGame(maxWinSeries(an)).value} в игре под номером ${maxGame(maxWinSeries(an)).game}.`, `Самая длинная серия проигрышей ${maxGame(maxLossSeries(an)).value} в игре под номером ${maxGame(maxLossSeries(an)).game}.`)
+    }
+    else {
+        console.log('Не существует  файла с логами defaultLog.txt или вы не задали правильное имя файла логов в директиве --logname=filename')
+    }
 }
 
 function gameNumber(log) {
@@ -106,6 +111,7 @@ function maxSerie(arraySeq, winOrLose, last = 1) {
         }
     }
 }
+
 
 let an = JSON.parse(logRead())
 analyzer()
