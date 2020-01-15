@@ -1,20 +1,32 @@
 {
-  "name": "lesson1",
+  "name": "NodeJS",
   "version": "1.0.0",
-  "description": "homework-1",
-  "main": "helloWorldNode.js",
+  "description": "",
+  "main": "game.js",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "minimist": "^1.2.0",
+    "readline": "^1.3.0",
+    "util": "^0.12.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexferdinand/NodeJSwebinars.git"
+  },
   "keywords": [],
   "author": "Al Fomin",
-  "license": "ISC"
-  "dependencies": {
-    "tinycolor2": {
-      "version": "1.4.1",
-      "repository": {
-        "type": "git",
-        "url": "https://github.com/bgrins/TinyColor.git"
-      }
-    }
+  "license": "ISC",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexferdinand/NodeJSwebinars.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexferdinand/NodeJSwebinars/issues"
+  },
+  "homepage": "https://github.com/alexferdinand/NodeJSwebinars#readme"
 }
