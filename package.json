@@ -1,13 +1,15 @@
 {
-  "name": "NodeJS",
+  "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
   "main": "game.js",
   "dependencies": {
+    "cli-color": "^2.0.0",
     "fs": "^0.0.1-security",
+    "inquirer": "^7.0.3",
     "minimist": "^1.2.0",
     "readline": "^1.3.0",
-    "util": "^0.12.1"
+    "util": "^0.12.1",
+    "xml-parse": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -20,13 +22,9 @@
   "keywords": [],
   "author": "Al Fomin",
   "license": "ISC",
-  "dependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexferdinand/NodeJSwebinars.git"
-  },
   "bugs": {
     "url": "https://github.com/alexferdinand/NodeJSwebinars/issues"
   },
-  "homepage": "https://github.com/alexferdinand/NodeJSwebinars#readme"
+  "homepage": "https://github.com/alexferdinand/NodeJSwebinars#readme",
+  "description": ""
 }
