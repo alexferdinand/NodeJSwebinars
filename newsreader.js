@@ -125,6 +125,12 @@ class Reader {
     }
 }
 
+
+/**
+ *Создает диалог при помощи модуля Inquirer для выбора желаемой RSS ленты с опциями отображения и отображает их с применением класса Reader
+ *
+ * @class Dialog
+ */
 class Dialog {
     constructor() {
         this.inquirer = require('inquirer');
@@ -183,6 +189,7 @@ class Dialog {
         this._init()
     }
 
+
 /**
  *Задает вопросы в диалогах из this.questions, вызывает функцию this._getNew() с выбранным адресом и опцией отображения - целиком или только заголовки
  *
@@ -195,6 +202,8 @@ _init() {
                 this._getNews(uri.uri, answers.full)
             })
     }
+
+
 /**
  *Принимает адрес RSS-ленты и опции отображения (целиком или только заголовки). Создает объект Reader c заданными параметрами и отображает ленту. Вновь вызывает this._init. 
  *
@@ -209,6 +218,7 @@ _getNews(uri, option) {
         this._init()
     }
 
-
 }
+
+
 new Dialog()
