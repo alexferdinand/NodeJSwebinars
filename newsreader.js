@@ -1,5 +1,12 @@
 'use strict'
 
+
+
+/**
+ *Обеспечивает доступ к RSS ленте и ее отображение
+ *
+ * @class Reader
+ */
 class Reader {
     constructor(url = "") {
         this.request = require('request');
@@ -7,6 +14,7 @@ class Reader {
         this.defaultURL = "https://news.yandex.ru/cosmos.rss"
         this.URL = this._init(url)
         this.xmlDOM
+        this.option = "t"
     }
 
 
@@ -43,10 +51,10 @@ class Reader {
      * @param {string} [option='t']
      * @memberof Reader
      */
-    _newsFormatter(news, option = "t") {
+    _newsFormatter(news) {
         let xml = require('xml-parse')
         this.xmlDOM = new xml.DOM(xml.parse(news));
-        switch (option) {
+        switch (this.option) {
             case "t":
                 this._printTitle(this.xmlDOM);
                 break
@@ -117,26 +125,90 @@ class Reader {
     }
 }
 
-class Interface {
+class Dialog {
     constructor() {
         this.inquirer = require('inquirer');
+        //Список RSS лент яндека из которых выбираем новости
+        this.URI = [{
+            subject: 'космос',
+            uri: 'https://news.yandex.ru/cosmos.rss'
+        }, {
+            subject: 'здоровье',
+            uri: 'https://news.yandex.ru/health.rss'
+        }, {
+            subject: 'игры',
+            uri: 'https://news.yandex.ru/games.rss'
+        }, {
+            subject: 'наука',
+            uri: 'https://news.yandex.ru/science.rss'
+        }, {
+            subject: 'политика',
+            uri: 'https://news.yandex.ru/politics.rss'
+        }, {
+            subject: 'путешествия',
+            uri: 'https://news.yandex.ru/travels.rss'
+        }, {
+            subject: 'религия',
+            uri: 'https://news.yandex.ru/religion.rss'
+        }]
+        //Список вопросов для диалога
+        this.questions = [{
+            type: 'list',
+            name: 'subject',
+            message: 'Выберите интересующую тему:',
+            choices: () => {
+                const arr = []
+                for (let item of this.URI) {
+                    arr.push(item.subject)
+                }
+                return arr
+            }
+        },
+        {
+            type: 'list',
+            message: 'Показывать только заголовки новостей или новость целиком?',
+            name: 'full',
+            choices:['Только заголовки', 'Новость целиком'],
+            filter: function(val) {
+                switch (val) {
+                    case 'Только заголовки':
+                    return 't'
+                    break
+                    case 'Новость целиком':
+                    return 'a'
+                    break
+                }
+              }
+          }]
         this._init()
     }
-    
-    _init() {
-        this.inquirer.prompt([{type: 'list', message: "yes, no", name: "y/n", choices: ['y', 'n']}
-            
-          ])
-          .then(answers => {
-            console.log(answers)
-          });
+
+/**
+ *Задает вопросы в диалогах из this.questions, вызывает функцию this._getNew() с выбранным адресом и опцией отображения - целиком или только заголовки
+ *
+ * @memberof Dialog
+ */
+_init() {
+        this.inquirer.prompt(this.questions)
+            .then(answers => {
+                const uri = this.URI.find(item => item.subject === answers.subject ? item.uri : false)
+                this._getNews(uri.uri, answers.full)
+            })
+    }
+/**
+ *Принимает адрес RSS-ленты и опции отображения (целиком или только заголовки). Создает объект Reader c заданными параметрами и отображает ленту. Вновь вызывает this._init. 
+ *
+ * @param {string} uri
+ * @param {string} option
+ * @memberof Dialog
+ */
+_getNews(uri, option) {
+        let der = new Reader(uri)
+        der.option = option
+        der.showNews()
+        this._init()
     }
 
 
 }
-
-const rl = new Interface()
-let der = new Reader()
-//der.showNews()
-
-//console.log(cf.red('ЭЭвавава'))
+new Dialog()
