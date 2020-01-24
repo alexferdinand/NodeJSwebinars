@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "game.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cli-color": "^2.0.0",
+    "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "inquirer": "^7.0.3",
     "minimist": "^1.2.0",
@@ -12,7 +14,9 @@
     "util": "^0.12.1",
     "xml-parse": "^0.4.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
