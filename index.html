@@ -47,10 +47,10 @@
             <form action="/" method="POST" name="siteName" id="siteName">
                 <select name="host" id="host">
                     <option value="regnum">Regnum</option>
-                    <option value="wcrisis">Worldcrisis</option>
-                    <option value="tass">ТАСС</option>
+                    <option value="kommersant">Коммерсант</option>
+                    <option value="ria">РИА Новости</option>
                 </select><label for="host">Имя сайта</label>
-                <input type="radio" name="mode" value="all" id="all-radio"><label for="all-radio">Сайт целиком</label>
+                <input type="radio" name="mode" value="all" id="all-radio" checked><label for="all-radio">Сайт целиком</label>
                 <input type="radio" name="mode" value="news" id="news-radio"><label for="news-radio">Только
                     новости</label>
                 <button type="submit" id="submitButton">Показать</button>
@@ -73,7 +73,8 @@
                             dataType: "json",
                         })
                         .done(function (json) {
-                            console.lod('Good!')
+                            $("#frame").attr("src", "http://127.0.0.1:8888/site/regnum")
+                            console.log(json)
                         })
                         .fail(function (xhr, status, errorThrown) {
                             alert("Sorry, there was a problem!");
