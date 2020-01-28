@@ -108,7 +108,8 @@ class News {
     for (let item of itemList) {
       if (i <= this.count) {
        let news = {
-          title: item.getElementsByTagName("title")[0].innerXML,
+          title: item.getElementsByTagNa
+          me("title")[0].innerXML,
           pubDate: item.getElementsByTagName("pubDate")[0].innerXML
         }
         responseArray.titles.push(news)
