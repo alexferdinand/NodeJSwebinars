@@ -38,46 +38,70 @@
 
         .frame {
             width: 100%;
-            min-height: 90%;
-            background: #ccc;
         }
 
         .submitButton {
             margin-left: 10px;
         }
+
+        .newslist {
+            margin: 30px;
+        }
+
+        .newslist li {
+            margin-bottom: 10px;
+        }
+
+        .newslist h1 {
+            font-size: 16px;
+        }
+
+        .pubDate {
+            font-size: smaller;
+            color: #999;
+        }
+
+
     </style>
     <header>
         <div class="form-container">
             <form action="/" method="POST" name="siteName" id="siteName">
                 <select name="subject" id="host">
-                    <option value="cosmos">Космос</option>
-                    <option value="games">Игры</option>
-                    <option value="science">Наука</option>
-                    <option value="health">Здоровье</option>
-                    <option value="politics">Политика</option>
-                    <option value="travels">Путешествия</option>
-                </select><label for="host">Имя сайта</label>
-                <input type="radio" name="mode" value="t" id="all-radio" checked><label for="all-radio">Только заголовок</label>
-                <input type="radio" name="mode" value="a" id="news-radio"><label for="news-radio">С аннотацией</label>
+                    <option value="cosmos" {{#if cookie.cosmos}} selected {{/if}}>Космос</option>
+                    <option value="games" {{#if cookie.games}} selected {{/if}}>Игры</option>
+                    <option value="science" {{#if cookie.science}} selected {{/if}}>Наука</option>
+                    <option value="health" {{#if cookie.health}} selected {{/if}}>Здоровье</option>
+                    <option value="politics" {{#if cookie.politics}} selected {{/if}}>Политика</option>
+                    <option value="travels" {{#if cookie.travels}} selected {{/if}}>Путешествия</option>
+                </select><label for="host" {{#if cookie.host}} selected {{/if}}>Тема</label>
+                <input type="radio" name="mode" value="t" id="all-radio" {{#if cookie.t}} checked {{/if}}><label for="all-radio">Только
+                    заголовок</label>
+                <input type="radio" name="mode" value="a" id="news-radio" {{#if cookie.a}} checked {{/if}}><label for="news-radio">С аннотацией</label>
                 <label for="count">Количество записей на странице</label>
                 <select name="count" id="count">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="all">20</option>
+                    <option value="5" {{#if cookie.five}} selected {{/if}}>5</option>
+                    <option value="10" {{#if cookie.ten}} selected {{/if}}>10</option>
                 </select>
                 <button type="submit" id="submitButton" class="submitButton">Показать</button>
             </form>
         </div>
     </header>
-   <div class="frame">
-   <ul class="newslist">
-  {{#each titles}}
-    <li></li>
-  {{/each}}
-</ul>
+    <div class="frame">
+        <ol class="newslist">
+            {{#each news}}
+            <li>
+                <h1>
+                    {{title}}
+                </h1> <span class="pubDate">{{pubDate}}</span>
+                {{#if description}}
+                <p class="description">{{description}}</p>
+                {{/if}}
+            </li>
+            {{/each}}
+        </ol>
 
-   </div>
-   
+    </div>
+
 </body>
 
 </html>
