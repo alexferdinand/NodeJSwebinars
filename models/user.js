@@ -3,6 +3,7 @@ const config = require('./config.json');
 
 const pool = mysql.createPool(config);
 
+
 module.exports = function () {
     this.getAll = function () {
         return new Promise(((resolve, reject) => {

@@ -1,20 +1,34 @@
-const express = require('express');
+const express = require('express')
 const path = require('path');
 const bodyParser = require('body-parser')
 const consolidate = require('consolidate')
 const user = require('./models/user')
-const User = new user
+const session = require('express-session')
+const MysqlStore = require('express-mysql-session')(session)
+const config = require('./models/config.json');
+
+const sessionStore = new MysqlStore(config);
+
 const routes = require("./routes/tasks")
 
-const app = express();
+const User = new user
+const app = express()
 
 app.use(bodyParser())
 
-app.engine('hbs', consolidate.handlebars);
+app.engine('hbs', consolidate.handlebars)
 app.set('view engine', 'hbs');
-app.set('views', path.resolve(__dirname, 'views'));
-app.use('/styles', express.static(path.resolve(__dirname, 'assets/')));
+app.set('views', path.resolve(__dirname, 'views'))
+
+app.use('/styles', express.static(path.resolve(__dirname, 'assets/')))
 app.use('/', routes)
+app.use(session({
+    secret: 'session_cookie_secret',
+    store: sessionStore,
+    resave: true,
+    saveUninitialized: false
+}))
+
 
 app.get('/users', (req, res) => {
     User.getAll().then(result => {
