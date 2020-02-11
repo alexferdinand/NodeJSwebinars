@@ -41,7 +41,7 @@ router.post('/tasks',  (req, res) => {
         case "PUT" :
             console.log (req.body)
             Task.updateById(req.body.tasks_id, req.body).then(result => {
-                res.json(`Обновлено записей ${result.affectedRows}`)
+                res.redirect('/tasks')
             },
             error => {
                 console.log(error)
