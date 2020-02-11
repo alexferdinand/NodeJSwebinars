@@ -3,7 +3,6 @@ const config = require('./config.json');
 
 const pool = mysql.createPool(config);
 
-
 module.exports = function () {
     this.getAll = function () {
         return new Promise(((resolve, reject) => {
@@ -12,7 +11,7 @@ module.exports = function () {
                     connection.release();
                     reject(err);
                 }
-                connection.query('SELECT * FROM `users`', (err, rows) => {
+                connection.query('SELECT * FROM `tasks`', (err, rows) => {
                     if (err) {
                         connection.release();
                         reject(err);
@@ -35,7 +34,7 @@ module.exports = function () {
                     connection.release();
                     reject(err);
                 }
-                connection.query('SELECT * FROM `users` WHERE users_id = ?', id, (err, rows) => {
+                connection.query('SELECT * FROM `tasks` WHERE tasks_id = ?', id, (err, rows) => {
                     if (err) {
                         connection.release();
                         reject(err);
@@ -57,8 +56,7 @@ module.exports = function () {
                     connection.release();
                     reject(err);
                 }
-
-                connection.query('UPDATE `users` SET name = ?, email = ?, age = ?  WHERE users_id = ?', [task.name, task.email, task.age, id], (err, result) => {
+                connection.query('UPDATE `tasks` SET task = ?  WHERE tasks_id = ?', [task.task, id], (err, result) => {
                     if (err) {
                         connection.release();
                         reject(err);
@@ -78,17 +76,18 @@ module.exports = function () {
                     connection.release();
                     reject(err);
                 }
-
-                connection.query('INSERT INTO `users` (name, email, age) VALUES (?, ?, ?)', [task.name, task.email, task.age], (err, result) => {
+                if (task.task !== '') {
+                connection.query('INSERT INTO `tasks` (task, users_id) VALUES (?, ?)', [task.task, task.users_id], (err, result) => {
                     if (err) {
                         connection.release();
                         reject(err);
                     }
 
                     connection.release();
-                    console.log(result.insertId)
                     resolve(result.insertId);
-                });
+                }); } else {
+                    reject("Пустое значение")
+                }
             });
         }));
     }
@@ -101,7 +100,7 @@ module.exports = function () {
                     reject(err);
                 }
 
-                connection.query('DELETE FROM `users` WHERE users_id = ?', id, (err, result) => {
+                connection.query('DELETE FROM `tasks` WHERE tasks_id = ?', id, (err, result) => {
                     if (err) {
                         connection.release();
                         reject(err);

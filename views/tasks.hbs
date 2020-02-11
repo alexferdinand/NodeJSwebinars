@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <ul class="tasks-container">
+            {{#each this}}
+            {{#if this.task}}
+            <li class="task-container">
+                <div class="task">{{this.task}}</div>
+                <form action="/tasks" method="POST"><button type="submit" class="task-button">-</button><input
+                        type="hidden" name="_method" value="DELETE"><input type="hidden" name="tasks_id"
+                        value="{{this.tasks_id}}"></form>
+
+                <form action="/tasks" method="POST">
+                    <div class="task-update-field__container" id="{{this.tasks_id}}">
+                        <input type="text" name="task" class="taskText task-update-field" value="{{this.task}}" size="30"
+                            maxlength="30"><button type="submit" class="task-button">i</button>
+                    </div>
+                    <button type="button" class="task-button" onclick="document.getElementById({{this.tasks_id}}).style.display='flex'">i</button><input type="hidden" name="_method"
+                        value="PUT"><input type="hidden" name="tasks_id" value="{{this.tasks_id}}">
+                </form>
+
+            </li>
+            {{/if}}
+            {{/each}}
+            <li class="task-create-container task-container">
+                <form action="/tasks" class="create-task" method="POST">
+                    <input type="text" name="task" class="taskText" size="30" maxlength="30">
+                    <input type="hidden" name="users_id" value="15">
+                    <button class="task-button" type="submit">+</button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</body>
+
+</html>
