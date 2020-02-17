@@ -10,32 +10,63 @@
 </head>
 
 <body>
+    <div class="logout"><a href="/logout">Выйти</a></div>
+    <h1>Пользователи</h1>
     <div class="wrapper">
         <ul class="tasks-container">
             {{#each this}}
             {{#if this.name}}
             <li class="task-container">
-                <div class="task">{{this.task}}</div>
+                <div class="task">{{this.name}} <span class="email">{{this.email}}</span></div>
                 <form action="/users" method="POST"><button type="submit" class="task-button">-</button><input
                         type="hidden" name="_method" value="DELETE"><input type="hidden" name="users_id"
                         value="{{this.users_id}}"></form>
 
+                <div class="user-update-field__container" id="{{this.users_id}}">
+                    <form action="/users" method="POST" class="user-update-form">
+                        <label for="name-create">Имя</label><input type="text" name="name" class="taskText name-create"
+                            size="30" value="{{this.name}}" maxlength="30">
+                        <label for="email-create">Электропочта </label><input type="email" name="email"
+                            class="taskText  email-create" value="{{this.email}}" size="20" maxlength="30">
+                        <label for="age-create">Возраст</label><input type="number" value="{{this.age}}" name="age"
+                            min="18" class="age-create" max="120" step="1">
+                        <label for="username-create">Логин</label><input type="text" name="username"
+                            class="taskText username-create" size="15" maxlength="30" value="{{this.username}}">
+                        <label for="password-create">Пароль</label><input type="password" name="password"
+                            class="taskText password-create" size="12">
+                        <input type="hidden" name="_method" value="PUT"><input type="hidden" name="users_id"
+                            value="{{this.users_id}}">
+                        <button type="submit" class="task-button">i</button>
+                        <div class="close" onclick="document.getElementById({{this.users_id}}).style.display='none'">Закрыть</div>
+                    </form>
+                </div>
                 <form action="/users" method="POST">
-                    <div class="task-update-field__container" id="{{this.users_id}}">
-                        <input type="text" name="task" class="taskText task-update-field" value="{{this.task}}" size="30"
-                            maxlength="30"><button type="submit" class="task-button">i</button>
-                    </div>
-                    <button type="button" class="task-button" onclick="document.getElementById({{this.users_id}}).style.display='flex'">i</button><input type="hidden" name="_method"
-                        value="PUT"><input type="hidden" name="users_id" value="{{this.users_id}}">
+                    <button type="button" class="task-button"
+                        onclick="document.getElementById({{this.users_id}}).style.display='block'">i</button><input
+                        type="hidden" name="_method" value="PUT"><input type="hidden" name="users_id"
+                        value="{{this.users_id}}">
                 </form>
+
+
+
+
+
 
             </li>
             {{/if}}
             {{/each}}
-            <li class="task-create-container task-container">
-                <form action="/users" class="create-task" method="POST">
-                    <input type="text" name="task" class="taskText" size="30" maxlength="30">
-                    <input type="hidden" name="users_id" value="15">
+            <li class="task-container user-create-container">
+                <form action="/users" class="create-task user-create-form" method="POST">
+                    <label for="name-create">Имя</label><input type="text" name="name" id="name-create" class="taskText"
+                        size="30" maxlength="30">
+                    <label for="email-create">Электропочта </label><input type="email" id="email-create" name="email"
+                        class="taskText" size="20" maxlength="30">
+                    <label for="age-create">Возраст</label><input type="number" id="age-create" name="age" min="18"
+                        max="120" step="1">
+                    <label for="username-create">Логин</label><input type="text" id="username-create" name="username"
+                        class="taskText" size="15" maxlength="30">
+                    <label for="password-create">Пароль</label><input type="password" id="password-create"
+                        name="password" class="taskText" size="12">
                     <button class="task-button" type="submit">+</button>
                 </form>
             </li>

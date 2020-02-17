@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const config = require('./config.json');
-
+const bcrypt = require('bcryptjs')
+const saltRounds = 12;
 const pool = mysql.createPool(config);
 
 
@@ -17,7 +18,6 @@ module.exports = function () {
                         connection.release();
                         reject(err);
                     }
-                    console.log(rows)
                     const clearRows = JSON.parse(JSON.stringify(rows));
                     // const clearRows = {...rows};
 
@@ -50,22 +50,46 @@ module.exports = function () {
         }));
     }
 
-    this.updateById = function (id, task) {
-        return new Promise(((resolve, reject) => {
+    this.findOne = function (username) {
+        return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) {
-                    connection.release();
+                    connection.release()
                     reject(err);
                 }
-
-                connection.query('UPDATE `users` SET name = ?, email = ?, age = ?  WHERE users_id = ?', [task.name, task.email, task.age, id], (err, result) => {
+                connection.query('SELECT * FROM `users` WHERE username = ?', username, (err, rows) => {
                     if (err) {
                         connection.release();
                         reject(err);
                     }
+                    const clearRows = JSON.parse(JSON.stringify(rows));
 
                     connection.release();
-                    resolve(result);
+                    resolve(clearRows);
+                })
+            })
+        })
+    }
+
+    this.updateById = function (id, task) {
+        console.log(task)
+        return new Promise(((resolve, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) {
+                    connection.release()
+                    reject(err)
+                }
+
+                const salt = bcrypt.genSaltSync(saltRounds)
+                task.password = bcrypt.hashSync(task.password, salt)
+                connection.query('UPDATE `users` SET name = ?, email = ?, age = ?, username = ?, password = ? WHERE users_id = ?', [task.name, task.email, task.age, task.username, task.password, id], (err, result) => {
+                    if (err) {
+                        connection.release()
+                        reject(err)
+                    }
+
+                    connection.release()
+                    resolve(result)
                 });
             });
         }));
@@ -79,14 +103,13 @@ module.exports = function () {
                     reject(err);
                 }
 
-                connection.query('INSERT INTO `users` (name, email, age) VALUES (?, ?, ?)', [task.name, task.email, task.age], (err, result) => {
+                connection.query('INSERT INTO `users` (name, email, age, username, password) VALUES (?, ?, ?)', [task.name, task.email, task.age, task.username, task.password], (err, result) => {
                     if (err) {
                         connection.release();
                         reject(err);
                     }
 
                     connection.release();
-                    console.log(result.insertId)
                     resolve(result.insertId);
                 });
             });

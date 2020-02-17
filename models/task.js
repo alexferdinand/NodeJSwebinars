@@ -16,7 +16,6 @@ module.exports = function () {
                         connection.release();
                         reject(err);
                     }
-                    console.log(rows)
                     const clearRows = JSON.parse(JSON.stringify(rows));
                     // const clearRows = {...rows};
 
