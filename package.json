@@ -12,6 +12,7 @@
     "express-session": "^1.17.0",
     "fs": "^0.0.1-security",
     "handlebars": "^4.7.2",
+    "jsonwebtoken": "^8.5.1",
     "minimist": "^1.2.0",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
