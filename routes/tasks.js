@@ -3,9 +3,10 @@ const router = express.Router()
 const tasks = require('../models/task')
 const Task = new tasks
 
+
+
 router.get('/tasks', (req, res) => {
     Task.getAll().then(result => {
-        console.log(result)
             res.render('tasks', result)
         },
         error => {
@@ -15,7 +16,6 @@ router.get('/tasks', (req, res) => {
 });
 
 router.get('/tasks/:id',  (req, res) => {
-    console.log(req.params)
     Task.getById(req.params.id).then(result => {
         res.json(result)
     },
@@ -27,7 +27,6 @@ router.get('/tasks/:id',  (req, res) => {
 
 
 router.post('/tasks',  (req, res) => {
-    console.log(req.body)
     switch (req.body._method)  {
        case "DELETE" :
             Task.deleteById(req.body.tasks_id).then(result => {
